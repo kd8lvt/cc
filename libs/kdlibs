@@ -41,3 +41,5 @@ end
 function update()
     downloadLib("kdlibs")
 end
+
+--checking that the updater works
