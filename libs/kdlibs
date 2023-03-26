@@ -14,6 +14,10 @@ local libs = {
     ["kdturt"] = {
         ["filename"] = "kdturt",
         ["url"] = "https://raw.githubusercontent.com/kd8lvt/kd-computercraft-libs/main/libs/kdturt"
+    },
+    ["kdlibs"] = {
+        ["filename"] = "kdlibs",
+        ["url"] = "https://kd8lvt.com/short/kdlibs"
     }
 }
 
@@ -21,11 +25,19 @@ function load(libraryName)
     if fs.exists('/kdlibs/'..(libs[libraryName].filename)) then
         os.loadAPI('/kdlibs/'..(libs[libraryName].filename))
     else
-        print('Downloading '..libraryName..' from github repo...')
-        local req = http.get(libs[libraryName].url)
-        local file = fs.open(fs.combine('/kdlibs/',libs[libraryName].filename),'w')
-        file.write(req.readAll())
-        file.close()
+        downloadLib(libraryName)
         os.loadAPI(fs.combine('/kdlibs/',libs[libraryName].filename))
     end
+end
+
+function downloadLib(libraryName)
+    print('Downloading '..libraryName..' from github repo...')
+    local req = http.get(libs[libraryName].url)
+    local file = fs.open(fs.combine('/kdlibs/',libs[libraryName].filename),'w')
+    file.write(req.readAll())
+    file.close()
+end
+
+function update()
+    downloadLib("kdlibs")
 end
