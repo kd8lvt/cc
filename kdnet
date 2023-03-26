@@ -58,7 +58,7 @@ function client.get(hostname,url,callback,headers)
         requestBody.headers = hearders
     end
     
-    rednet.send(serverId,requestBody)
+    rednet.send(serverId,requestBody,"kdnet")
     local gotMessage = false
     
     while not gotMessage do
@@ -83,5 +83,5 @@ function client.post(hostname,url,headers)
         requestBody.headers = headers
     end
     
-    rednet.send(serverId,requestBody)
+    rednet.send(serverId,requestBody,"kdnet")
 end
