@@ -1,0 +1,151 @@
+if turtle == nil then
+    return error("Computer must be a turtle to use kdturt.")
+end
+
+function fuel()
+    return turtle.getFuelLevel()
+end
+
+function refuel()
+    local slot = turtle.getSelectedSlot()
+    local i = 1
+    for i=1,16,1 do
+        if turtle.getItemCount(i) > 0 then
+            turtle.select(i)
+            turtle.refuel()
+        end
+    end
+    turtle.select(slot)
+end
+
+local function tryGo(direction,stage)
+    stage = stage or 0
+    if stage == 0 then
+        if goDirection(direction) then
+            return true
+        else
+            return tryGo(direction,1)
+        end
+    elseif stage == 1 then
+        if attack(direction) then
+            if goDirection(direction) then
+                return true
+            else
+                return tryGo(direction,2)
+            end
+        else
+            return tryGo(direction,2)
+        end
+    elseif stage == 2 then
+        if dig(direction) then
+            if goDirection(direction) then
+                return true
+            else
+                return false
+            end
+        end
+    end
+end
+
+local function goDirection(direction)
+    if direction == "forward" then
+        return turtle.forward()
+    elseif direction == "left" then
+        turn("left")
+        local s = turtle.forward()
+        turn("right")
+        return s
+    elseif direction == "right" then
+        turn("right")
+        local s = turtle.forward()
+        turn("left")
+        return s
+    elseif direction == "back" then
+        return turtle.back()
+    elseif direction == "up" then
+        return turtle.up()
+    elseif direction == "down" then
+        return turtle.down()
+    end
+    return false
+end
+
+function go(direction)
+    direction = direction or "forward"               
+    tryGo(direction)
+end
+
+function dig(direction)
+    direction = direction or "forward"
+    if direction == "forward" then
+        while turtle.dig() do
+            sleep(0.05)
+        end
+    elseif direction == "left" then
+        turn("left")
+        dig()
+        turn("right")
+    elseif direction == "right" then
+        turn("right")
+        dig()
+        turn("left")
+    elseif direction == "up" then
+        while turtle.digUp() do
+            sleep(0.05)
+        end
+    elseif direction == "down" then
+        while turtle.digDown() do
+            sleep(0.05)
+        end
+    elseif direction == "back" then
+        turn("left",2)
+        dig()
+        turn("right",2)
+    end
+end
+
+function attack(direction)
+    direction = direction or "forward"
+    if direction == "forward" then
+        while turtle.attack() do
+            sleep(0.05)
+        end
+    elseif direction == "left" then
+        turn("left")
+        attack()
+        turn("right")
+    elseif direction == "right" then
+        turn("right")
+        attack()
+        turn("left")
+    elseif direction == "up" then
+        while turtle.attackUp() do
+            sleep(0.05)
+        end
+    elseif direction == "down" then
+        while turtle.attackDown() do
+            sleep(0.05)
+        end
+    elseif direction == "back" then
+        turn("left",2)
+        attack()
+        turn("right",2)
+    end
+end
+
+function turn(direction,times)
+    if direction == nil then return error("Please specify a direction!") end
+    times = times or 1
+    if times > 0 then
+        local i = 1
+        for i=1,times,1 do
+            turn(direction,-1)
+        end
+    else
+        if direction == "left" then
+            turtle.turnLeft()
+        elseif direction == "right" then
+            turtle.turnRight()
+        end
+    end
+end
