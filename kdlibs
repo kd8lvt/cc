@@ -18,7 +18,9 @@ function load(libraryName)
         os.loadAPI('/kdlibs/'..(libs[libraryName].filename))
     else
         print('Downloading '..libraryName..' from github repo...')
-        shell.run('wget '..(libs[libraryName].url)..' /kdlibs/'..(libs[libraryName].filename))
-        os.loadAPI('/kdlibs/'..(libs[libraryName].filename))
+        local req = http.get(libs[libraryName].url)        local file = fs.open(fs.combine('/kdlibs/',libs[libraryName].filename),'w')
+        file.write(req.readAll())
+        file.close()
+        os.loadAPI(fs.combine('/kdlibs/',libs[libraryName].filename))
     end
 end
