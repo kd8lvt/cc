@@ -10,6 +10,10 @@ local libs = {
     ["kdfs"] = {
         ["filename"] = "kdfs",
         ["url"] = "https://raw.githubusercontent.com/kd8lvt/kd-computercraft-libs/main/libs/kdfs"
+    },
+    ["kdturt"] = {
+        ["filename"] = "kdturt",
+        ["url"] = "https://raw.githubusercontent.com/kd8lvt/kd-computercraft-libs/main/libs/kdturt"
     }
 }
 
