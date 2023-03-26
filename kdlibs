@@ -5,11 +5,11 @@ local libs = {
     },
     ["kdnet"] = {
         ["filename"] = "kdnet",
-        ["url"] = ""
+        ["url"] = "https://raw.githubusercontent.com/kd8lvt/kd-computercraft-libs/main/kdnet"
     },
     ["kdfs"] = {
         ["filename"] = "kdfs",
-        ["url"] = ""
+        ["url"] = "https://raw.githubusercontent.com/kd8lvt/kd-computercraft-libs/main/kdfs"
     }
 }
 
