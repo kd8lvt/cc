@@ -1,0 +1,24 @@
+local libs = {
+    ["lua_string"] = {
+        ["filename"] = "lua_string",
+        ["url"] = "https://raw.githubusercontent.com/stein197/lua-string/main/init.lua"
+    },
+    ["kdnet"] = {
+        ["filename"] = "kdnet",
+        ["url"] = ""
+    },
+    ["kdfs"] = {
+        ["filename"] = "kdfs",
+        ["url"] = ""
+    }
+}
+
+function load(libraryName)
+    if fs.exists('/kdlibs/'..(libs[libraryName].filename)) then
+        os.loadAPI('/kdlibs/'..(libs[libraryName].filename))
+    else
+        print('Downloading '..libraryName..' from github repo...')
+        shell.run('wget '..(libs[libraryName].url)..' /kdlibs/'..(libs[libraryName].filename))
+        os.loadAPI('/kdlibs/'..(libs[libraryName].filename))
+    end
+end

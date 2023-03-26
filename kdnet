@@ -1,0 +1,87 @@
+if not rednet.isOpen() then
+    local p = peripheral.find("modem",function(name,obj)
+        obj.side = name
+        return true
+    end)
+    rednet.open(p.side)
+end
+
+host = {}
+client = {}
+
+local _hostRunning = false
+
+local function checkForHostHalt()
+    while true do
+        if not _hostRunning then return end
+        sleep(0.05)
+    end
+end
+
+function host.start(hostname,callback)
+    if _hostRunning then
+        return console.error('The host process is already running!')
+    end
+    rednet.host("kdnet",hostname)
+    
+    local hostProcess = function()
+        while true do
+            local id,msg,proto = rednet.receive()
+            if proto == "kdnet" then
+                callback(id,msg,proto)
+            end
+        end
+    end
+    
+    _hostRunning = true    
+    parallel.waitForAny(hostProcess,checkForHostHalt)
+end
+
+function host.halt()
+    if not _hostRunning then return error('Host process is not currently running.') end
+    _hostRunning = false
+end
+
+client.dns = {}
+
+function client.dns.find(hostname)
+    return rednet.lookup('kdnet',hostname)
+end
+
+client.dns.lookup = client.dns.find
+
+function client.get(hostname,url,callback,headers)
+    local serverId = client.dns.find(hostname)
+    if serverId == nil then return error('NXHOSTNAME: Hostname does not exist.') end
+    local requestBody = {["type"]="GET",["url"]=url,["hostname"]=hostname}
+    if headers ~= nil then
+        requestBody.headers = hearders
+    end
+    
+    rednet.send(serverId,requestBody)
+    local gotMessage = false
+    
+    while not gotMessage do
+        id,msg,protocol = rednet.receive()
+        if id == serverId and protocol == "kdnet" then
+            gotMessage = true
+            if callback ~= nil and type(callback) == type(print) then
+                callback(msg)
+            else
+                return msg
+            end
+        end
+    end
+end
+
+function client.post(hostname,url,headers)
+    local serverId = client.dns.find('kdnet',hostname)
+    if serverId == nil then return error('NXHOSTNAME: Hostname does not exist.') end
+    
+    local requestBody = {["type"]="POST",["url"]=url,["hostname"]=hostname}
+    if headers ~= nil then
+        requestBody.headers = headers
+    end
+    
+    rednet.send(serverId,requestBody)
+end

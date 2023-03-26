@@ -1,0 +1,15 @@
+function listFiles(dir)
+    local function yieldListFiles(startPath)
+        local list = fs.list(startPath)
+        for _,file in ipairs(list) do
+            local path = fs.combine(startPath,file)
+            if fs.isDir(path) then
+                yieldListFiles(path)
+            else
+                coroutine.yield(path,file)
+            end
+        end
+    end
+      
+    return coroutine.wrap(function() yieldListFiles(dir or '/') end)
+end
