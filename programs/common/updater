@@ -1,3 +1,6 @@
+print("Deleting kdlibs folder...")
+fs.delete("/kdlibs")
+print("Deleted.")
 print('Downloading kdlibs from github repo...')
 local req = http.get("https://kd8lvt.com/short/kdlibs")
 local file = fs.open(fs.combine('/kdlibs/',"kdlibs"),'w')
