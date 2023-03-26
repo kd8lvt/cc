@@ -1,0 +1,6 @@
+print('Downloading kdlibs from github repo...')
+local req = http.get('https://kd8lvt.com/short/kdlibs')
+local file = fs.open('kdlibs/kdlibs','w')
+file.write(req.readAll())
+file.close()
+print('Done downloading. kdlibs will download modules as requested by any programs you make or download.')
