@@ -5,15 +5,15 @@ local libs = {
     },
     ["kdnet"] = {
         ["filename"] = "kdnet",
-        ["url"] = "https://raw.githubusercontent.com/kd8lvt/kd-computercraft-libs/main/libs/kdnet"
+        ["url"] = "https://raw.githubusercontent.com/kd8lvt/cc/main/libs/kdnet"
     },
     ["kdfs"] = {
         ["filename"] = "kdfs",
-        ["url"] = "https://raw.githubusercontent.com/kd8lvt/kd-computercraft-libs/main/libs/kdfs"
+        ["url"] = "https://raw.githubusercontent.com/kd8lvt/cc/main/libs/kdfs"
     },
     ["kdturt"] = {
         ["filename"] = "kdturt",
-        ["url"] = "https://raw.githubusercontent.com/kd8lvt/kd-computercraft-libs/main/libs/kdturt"
+        ["url"] = "https://raw.githubusercontent.com/kd8lvt/cc/main/libs/kdturt"
     },
     ["kdlibs"] = {
         ["filename"] = "kdlibs",
