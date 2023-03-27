@@ -18,6 +18,10 @@ local libs = {
     ["kdlibs"] = {
         ["filename"] = "kdlibs",
         ["url"] = "https://kd8lvt.com/short/kdlibs"
+    },
+    ["kdtable"] = {
+        ["filename"] = "kdtable",
+        ["url"] = "https://raw.githubusercontent.com/kd8lvt/cc/main/libs/kdtable"
     }
 }
 
