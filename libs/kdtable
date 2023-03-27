@@ -6,3 +6,12 @@ function includes(tbl,toFind)
   end
   return false
 end
+
+function indexof(tbl,toFind)
+  for k,v in ipairs(tbl) do
+    if v == toFind then
+      return k
+    end
+  end
+  return -1
+end
