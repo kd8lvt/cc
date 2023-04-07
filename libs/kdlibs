@@ -22,6 +22,10 @@ local libs = {
     ["kdtable"] = {
         ["filename"] = "kdtable",
         ["url"] = "https://raw.githubusercontent.com/kd8lvt/cc/main/libs/kdtable"
+    },
+    ["kdglasses"] = {
+        ["filename"] = "kdglasses",
+        ["url"] = "https://raw.githubusercontent.com/kd8lvt/cc/main/libs/kdglasses"
     }
 }
 
