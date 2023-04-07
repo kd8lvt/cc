@@ -1,0 +1,47 @@
+local g = peripheral.find('arController')
+if g == nil then
+  return error("Couldn't find an arController peripheral!")
+end
+
+local container = {}
+container.pos = {x=0,y=0,w=0,h=0}
+container.ids = {}
+function container:new(o)
+    o = o or {}
+    setmetatable(o,self)
+    self.__index = self
+    return o
+end
+
+local function randId()
+    return math.random(-999999,999999)
+end
+
+Text = container:new()
+Text.text = ""
+Text.fg = 0xffffffff
+
+function Text:render()
+    if (self.ids ~= {}) then
+        for k,v in ipairs(self.ids) do
+            g.clearElement(v)
+        end
+        self.ids = {}
+    end    
+    
+    table.insert(self.ids,g.drawStringWithId(randId(),self.text,self.pos.x,self.pos.y,self.fg)
+end
+
+Rect = container:new()
+Rect.bg = 0x000000ff
+
+function Rect:render()
+    if self.ids ~= {} then
+        for k,v in ipairs(self.ids) do
+            g.clearElement(v)
+        end
+        self.ids = {}
+    end
+    
+    table.insert(self.ids,g.fillWithId(randId(),self.pos.x,self.pos.y,self.pos.w,self.pos.h,self.bg)
+end
